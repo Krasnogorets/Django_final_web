@@ -1,0 +1,16 @@
+{% extends 'recipes/base.html' %}
+
+{% block content %}
+
+<section class="al mt-3">
+    <div class="container justify-content-center">
+        <div class="alert alert-dismissible alert-warning">
+            <h4 class="alert-heading">Вы покинули сайт</h4>
+            <a class="btn btn-primary active me-4 " role="button" aria-pressed="true"  href="{% url 'user_app:login' %}">
+                       Войти снова</a>
+
+
+        </div>
+    </div>
+</section>
+{% endblock %}

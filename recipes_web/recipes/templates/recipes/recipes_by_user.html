@@ -1,0 +1,44 @@
+{% extends "recipes/base.html" %}
+{% block title %}Все рецепты{% endblock %}
+
+
+{% block content %}
+<section class="al mt-3">
+    <div class="container justify-content-center">
+        {% for recipe in recipes %}
+        <div container>
+            <hr class="hr hr-blurry" />
+            <div class="row">
+                <div class="col">
+                    <p>Время готовки: {{ recipe.cooking_time }} мин.</p>
+                </div>
+                <div class="col">
+                    <p>Просмотров: {{ recipe.views }}</p>
+                </div>
+                <div class="col">
+                    <p>Обновлено: {{ recipe.date_of_update }}</p>
+                </div>
+                <hr class="hr hr-blurry" />
+            </div>
+            <div class="row">
+                <div class="col">
+                    {% if recipe.picture %}
+                    <img src="{{ recipe.picture.url }}"
+                         class="d-block " height="415px">
+                    {% else %}
+                    <p>no image</p>
+                    {% endif %}
+
+                </div>
+                <div class="col">
+                    <p>{{ recipe.description }}</p>
+                    <a href="{% url 'recipes:recipe_full' recipe_id=recipe.pk %}"
+                       class="btn btn-secondary  active me-4 " role="button" aria-pressed="true"> Подробнее</a>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

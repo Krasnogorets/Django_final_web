@@ -1,0 +1,50 @@
+{% extends "recipes/base.html" %}
+{% block title %}Все рецепты{% endblock %}
+
+
+{% block content %}
+<section class="al mt-3">
+    <div class="container justify-content-center">
+        {% for recipe in recipes %}
+        <div container>
+            <hr class="hr hr-blurry"/>
+            <div class="row">
+                <div class="col">
+                    <p>Автор: {{ recipe.author }}</p>
+                </div>
+                <div class="col">
+                      <a href="{% url 'recipes:recipes_by_user' author_id=recipe.author.pk %}"
+                       class="btn btn-secondary  active me-4 " role="button" aria-pressed="true"> Все
+                        рецепты {{ recipe.author }}</a>
+                </div>
+                <div class="col">
+                    <p>Просмотров: {{ recipe.views }}</p>
+                </div>
+                <div class="col">
+                    <p>Обновлено: {{ recipe.date_of_update }}</p>
+                </div>
+                <hr class="hr hr-blurry"/>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {% if recipe.picture %}
+                    <img src="{{ recipe.picture.url }}"
+                         class="d-block " height="415px">
+                    {% else %}
+                    <p>no image</p>
+                    {% endif %}
+
+                </div>
+                <div class="col">
+                    <h3>{{ recipe.title }}</h3>
+                    <p>{{ recipe.description }}</p>
+                    <a href="{% url 'recipes:recipe_full' recipe_id=recipe.pk %}"
+                       class="btn btn-secondary  active me-4 " role="button" aria-pressed="true"> Подробнее</a>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
