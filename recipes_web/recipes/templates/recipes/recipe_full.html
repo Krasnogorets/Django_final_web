@@ -67,7 +67,7 @@
                 <div class="col">
                     <h3>{{ recipe.title }}</h3>
                     <p>{{ recipe.description }}</p>
-                    <p>{{ recipe.cooking_steps }}</p>
+                    <p>{{ recipe.cooking_steps|linebreaksbr }}</p>
                     {% if user.is_authenticated %}
                     {% if recipe.author.pk == request.user.pk %}
                     <a href="{% url 'recipes:update_recipe' recipe_id=recipe.pk %}"
