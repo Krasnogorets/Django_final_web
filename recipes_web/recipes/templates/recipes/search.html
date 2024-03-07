@@ -1,0 +1,105 @@
+{% extends "recipes/base.html" %}
+{% block title %}Поиск по рецептам{% endblock %}
+
+
+{% block content %}
+<h1> {{ test }}</h1>
+<section class="al mt-3">
+    <div class="container justify-content-center">
+        <div class="container">
+            {% if message %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" tabindex="-1">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-6" >
+                    <form action="{% url 'recipes:search' %}" method="get">
+                        <div style="display: flex;">
+                        {{ form.as_div }}
+                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                             </div>
+                    </form>
+                </div>
+                <div class="col" >
+                    <form action="{% url 'recipes:search' %}" method="POST">
+                        {% csrf_token %}
+                        <select name="category">
+                            <option value="">Все категории</option>
+                            {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.title }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="Search">
+                    </form>
+                </div>
+                <div class="col" style="width:20%;">
+
+                    <form action="{% url 'recipes:search' %}" method="POST">
+                        {% csrf_token %}
+                        <select name="ingredients">
+                            <option value="">Все ингридиенты</option>
+                            {% for ingredient in ingredients %}
+                            <option value="{{ ingredient.id }}">{{ ingredient.title }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="Search">
+                    </form>
+                </div>
+
+            </div>
+
+            {% if recipes %}
+            <h3>Результаты поиска по {{ search_ref }}: {{ cat_name }}</h3>
+
+            {% for recipe in recipes %}
+
+
+            <hr class="hr hr-blurry"/>
+            <div class="row">
+                <div class="col">
+                    <p>Автор: {{ recipe.author }}</p>
+                </div>
+                <div class="col">
+                    {% if recipe.author.pk %}
+                    <a href="{% url 'recipes:recipes_by_user' author_id=recipe.author.pk %}"
+                       class="btn btn-secondary  active me-4 " role="button" aria-pressed="true"> Все
+                        рецепты {{ recipe.author }}</a>
+                    {% endif %}
+                </div>
+                <div class="col">
+                    <p>Просмотров: {{ recipe.views }}</p>
+                </div>
+                <div class="col-4">
+                    <p>Последний просмотр: {{ recipe.date_of_update }}</p>
+                </div>
+                <hr class="hr hr-blurry"/>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {% if recipe.picture %}
+                    <img src="{{ recipe.picture.url }}"
+                         class="d-block " height="415px">
+                    {% else %}
+                    <p>no image</p>
+                    {% endif %}
+
+                </div>
+                <div class="col">
+                    <h3>{{ recipe.title }}</h3>
+                    <p>{{ recipe.description }}</p>
+                    {% if recipe.pk %}
+                    <a href="{% url 'recipes:recipe_full' recipe_id=recipe.pk %}"
+                       class="btn btn-secondary  active me-4 " role="button" aria-pressed="true"> Подробнее</a>
+                    {% endif %}
+                </div>
+
+            </div>
+            {% endfor %}
+
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

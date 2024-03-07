@@ -1,11 +1,17 @@
 {% extends "recipes/base.html" %}
-{% block title %}Все рецепты{% endblock %}
+{% block title %}Подробности рецепта{% endblock %}
 
 
 {% block content %}
 <section class="al mt-3">
-    <div class="container justify-content-center">
 
+    <div class="container justify-content-center">
+        {% if message %}
+         <div class="alert alert-warning alert-dismissible fade show" role="alert" tabindex="-1">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
         <div container>
             <hr class="hr hr-blurry"/>
             <div class="row">
@@ -29,7 +35,7 @@
                     <div class="col">
 
                         {% for category in category %}
-                        <a href="{% url 'recipes:recipes_by_user' author_id=recipe.author.pk %}"
+                        <a href="{% url 'recipes:search_by_category' cat=category %}"
                            class="btn btn-info btn-sm  active me-4 " role="button" aria-pressed="true"> {{ category }}</a>
                         {% endfor %}
                     </div>
@@ -41,7 +47,7 @@
                     </div>
                     <div class="col">
                         {% for ingredient in ingredients %}
-                        <a href="{% url 'recipes:recipes_by_user' author_id=recipe.author.pk %}"
+                        <a href="{% url 'recipes:search_by_ingredient' ingredient=ingredient %}"
                            class="btn btn-outline btn-sm  active me-1 " role="button" aria-pressed="true"> {{ ingredient }}</a>
                         {% endfor %}
                     </div>
@@ -66,6 +72,8 @@
                     {% if recipe.author.pk == request.user.pk %}
                     <a href="{% url 'recipes:update_recipe' recipe_id=recipe.pk %}"
                        class="btn btn-secondary  active me-4 " role="button" aria-pressed="true"> Редактировать</a>
+                    <a href="{% url 'recipes:delete_recipe' recipe_id=recipe.pk %}"
+                       class="btn btn-secondary  active me-4 " role="button" aria-pressed="true"> Удалить</a>
                     {% endif %}
                     {% endif %}
                 </div>

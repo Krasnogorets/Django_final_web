@@ -11,6 +11,8 @@
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+
+
         <h3>Добавить новый рецепт</h3>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -20,12 +22,15 @@
             </div>
             {% endif %}
             {% for field in form %}
+
             <p class="form-label">{{ field.label }}</p>
             <p>{{ field }}</p>
+
             {% if field.errors %}
             <ul class="alert alert-danger">
                 {{ field.errors }}
             </ul>
+
             {% endif %}
             {% endfor %}
             <button type="submit" class="btn btn-outline-success">Внести рецепт в БД</button>
