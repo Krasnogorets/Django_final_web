@@ -4,12 +4,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 
 
-# class UserFormRegistration(forms.Form):
-#     name = forms.CharField(max_length=100)
-#     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'user@mail.ru'}))
-#     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), required=True)
-
-
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
         max_length=150,
@@ -68,7 +62,3 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2', ]
-
-
-
-

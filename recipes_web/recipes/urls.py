@@ -13,6 +13,5 @@ urlpatterns = [
     path('search/by_category/<str:cat>/', views.search_by_category, name='search_by_category'),
     path('search/by_ingredient/<str:ingredient>/', views.search_by_ingredient, name='search_by_ingredient'),
     path('search/', views.search, name='search'),
-    # path('search/', views.search_recipes, name='search_recipes'),
 
 ]

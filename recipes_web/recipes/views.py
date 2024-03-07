@@ -1,10 +1,9 @@
 from django.shortcuts import render, get_object_or_404
-from .forms import AddNewRecipe, RecipeSearchForm, AddNewIngredient
+from .forms import AddNewRecipe, RecipeSearchForm
 from django.core.files.storage import FileSystemStorage
 from .models import Recipe, Category, Ingredients
 from random import choices
 from django.db.models import Q
-
 
 
 def index(request):
@@ -25,7 +24,6 @@ def index(request):
 def add_new_recipe(request):
     form = AddNewRecipe(request.POST, request.FILES)
     if request.method == 'POST':
-        print(request.POST)
 
         if form.is_valid():
             if request.FILES:
@@ -50,7 +48,7 @@ def add_new_recipe(request):
             recipe.ingredients.add(*ingredients)
             recipe.category.add(*category)
             message = 'рецепт добавлен в бд'
-            return render(request, 'recipes/add_recipe.html', {'form': form,  'message': message})
+            return render(request, 'recipes/add_recipe.html', {'form': form, 'message': message})
         else:
             return render(request, 'recipes/add_recipe.html', {'form': form,
                                                                'message': 'Форма недействительна'})
@@ -58,7 +56,7 @@ def add_new_recipe(request):
     else:
         form = AddNewRecipe()
         message = 'Заполните форму для рецепта'
-        return render(request, 'recipes/add_recipe.html', {'form': form,  'message': message})
+        return render(request, 'recipes/add_recipe.html', {'form': form, 'message': message})
 
 
 def all_recipes(request):

@@ -1,9 +1,8 @@
 from django import forms
-from django.forms import MultiValueField, CharField, ChoiceField, MultiWidget, TextInput, Select, Textarea
+from django.forms import TextInput, Textarea
 
-from .models import Recipe, Category, Ingredients
+from .models import Recipe
 from django.utils.translation import gettext as _
-
 
 
 class AddNewRecipe(forms.ModelForm):
@@ -22,15 +21,3 @@ class AddNewRecipe(forms.ModelForm):
 class RecipeSearchForm(forms.Form):
     query = forms.CharField(label='Поиск по тексту', max_length=200, empty_value="", required=False,
                             widget=forms.TextInput(attrs={"style": "width: 400px;"}))
-
-
-class AddNewIngredient(forms.ModelForm):
-    title = forms.CharField(label='новый ингридиент', max_length=200, empty_value="", required=False,
-                            widget=forms.TextInput(attrs={"style": "width: 200px;"}))
-
-    class Meta:
-        model = Ingredients
-        fields = ['title']
-
-
-
